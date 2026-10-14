@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LithLingo — Documentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #58cc02;
+    --green-dark: #46a301;
+    --green-soft: #f0fce8;
+    --blue: #1cb0f6;
+    --blue-soft: #e8f7fe;
+    --red: #ff4b4b;
+    --red-soft: #fff0f0;
+    --yellow: #ffc800;
+    --yellow-soft: #fffbe6;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --sidebar-w: 260px;
+    --header-h: 56px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-800);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--header-h);
+    background: #fff;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center; gap: 12px;
+    padding: 0 20px;
+  }
+  .header-logo {
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 800; font-size: 16px; color: var(--gray-900);
+    text-decoration: none;
+  }
+  .header-logo span { color: var(--green); }
+  .header-badge {
+    font-size: 11px; font-weight: 600;
+    background: var(--green-soft); color: var(--green-dark);
+    border: 1px solid #c3f07a;
+    padding: 2px 8px; border-radius: 20px;
+  }
+  .header-search {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 8px;
+    background: var(--gray-100); border: 1px solid var(--gray-200);
+    border-radius: 8px; padding: 6px 12px;
+    font-size: 13px; color: var(--gray-400);
+    cursor: pointer; min-width: 200px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed; top: var(--header-h); left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: #fff;
+    border-right: 1px solid var(--gray-200);
+    overflow-y: auto;
+    padding: 16px 0 40px;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+
+  .nav-section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--gray-400);
+    padding: 14px 20px 6px;
+  }
+  .nav-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 20px;
+    font-size: 13px; font-weight: 500; color: var(--gray-600);
+    text-decoration: none; border-radius: 0;
+    transition: all .15s;
+    border-left: 3px solid transparent;
+  }
+  .nav-link:hover { color: var(--gray-900); background: var(--gray-50); }
+  .nav-link.active {
+    color: var(--green-dark); background: var(--green-soft);
+    border-left-color: var(--green); font-weight: 600;
+  }
+  .nav-link .nav-icon { font-size: 14px; width: 16px; text-align: center; }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: var(--sidebar-w);
+    margin-top: var(--header-h);
+    padding: 40px 48px 80px;
+    max-width: 900px;
+  }
+
+  /* ── SECTIONS ── */
+  .doc-section { margin-bottom: 60px; }
+  .doc-section + .doc-section { border-top: 1px solid var(--gray-100); padding-top: 52px; }
+
+  h1.page-title {
+    font-size: 28px; font-weight: 800; color: var(--gray-900);
+    margin-bottom: 8px; line-height: 1.2;
+  }
+  .page-subtitle { color: var(--gray-500); font-size: 15px; margin-bottom: 32px; }
+
+  h2.section-title {
+    font-size: 20px; font-weight: 700; color: var(--gray-900);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  h2.section-title .icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+
+  h3 { font-size: 15px; font-weight: 700; color: var(--gray-800); margin: 20px 0 8px; }
+  h4 { font-size: 13px; font-weight: 700; color: var(--gray-700); margin: 14px 0 6px; }
+
+  p { color: var(--gray-600); margin-bottom: 12px; line-height: 1.7; }
+
+  /* ── CARDS ── */
+  .card {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 20px 24px; margin-bottom: 16px;
+  }
+  .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px; margin-bottom: 16px;
+  }
+  .card-sm {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .card-sm .card-label { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+  .card-sm .card-value { font-size: 14px; font-weight: 700; color: var(--gray-900); font-family: 'IBM Plex Mono', monospace; }
+
+  /* ── STACK BADGES ── */
+  .stack-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px; }
+  .stack-badge {
+    font-size: 12px; font-weight: 600;
+    padding: 4px 10px; border-radius: 20px;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-50); color: var(--gray-700);
+  }
+  .stack-badge.green { background: var(--green-soft); color: var(--green-dark); border-color: #c3f07a; }
+  .stack-badge.blue { background: var(--blue-soft); color: #0a7ab5; border-color: #b3dff7; }
+  .stack-badge.orange { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+  .stack-badge.purple { background: #faf5ff; color: #7e22ce; border-color: #e9d5ff; }
+
+  /* ── CODE BLOCKS ── */
+  pre {
+    background: var(--gray-900); color: #e2e8f0;
+    border-radius: 10px; padding: 18px 20px; margin: 12px 0 16px;
+    overflow-x: auto; font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px; line-height: 1.7;
+    border: 1px solid #2d3748;
+  }
+  code {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    background: var(--gray-100); color: var(--gray-800);
+    padding: 2px 6px; border-radius: 4px; border: 1px solid var(--gray-200);
+  }
+  pre code { background: none; border: none; color: inherit; padding: 0; font-size: inherit; }
+  .code-green { color: #68d391; }
+  .code-blue { color: #76e4f7; }
+  .code-yellow { color: #fbd38d; }
+  .code-red { color: #fc8181; }
+  .code-comment { color: #718096; }
+
+  /* ── STEPS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; margin: 16px 0; }
+  .step {
+    display: flex; gap: 16px;
+    padding-bottom: 20px; position: relative;
+  }
+  .step:not(:last-child)::before {
+    content: ''; position: absolute;
+    left: 15px; top: 32px; bottom: 0; width: 2px;
+    background: var(--gray-200);
+  }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    background: var(--green); color: #fff;
+    font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+  }
+  .step-body { flex: 1; padding-top: 5px; }
+  .step-title { font-weight: 700; font-size: 14px; color: var(--gray-900); margin-bottom: 4px; }
+  .step-desc { color: var(--gray-500); font-size: 13px; }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow {
+    display: flex; flex-direction: column; gap: 0;
+    background: var(--gray-50); border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 20px 24px; margin: 12px 0 20px;
+  }
+  .flow-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 8px 0; position: relative;
+  }
+  .flow-item:not(:last-child)::after {
+    content: '↓'; position: absolute; left: 10px; bottom: -14px;
+    color: var(--gray-400); font-size: 14px; font-weight: 700; z-index: 1;
+  }
+  .flow-dot {
+    width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .flow-text { font-size: 13px; color: var(--gray-700); line-height: 1.5; }
+  .flow-text strong { color: var(--gray-900); font-weight: 700; }
+
+  /* ── TABLE ── */
+  .doc-table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px; }
+  .doc-table th {
+    text-align: left; padding: 10px 14px;
+    background: var(--gray-100); color: var(--gray-600);
+    font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .05em;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .doc-table td {
+    padding: 10px 14px; border-bottom: 1px solid var(--gray-100);
+    vertical-align: top; color: var(--gray-700);
+  }
+  .doc-table tr:last-child td { border-bottom: none; }
+  .doc-table tr:hover td { background: var(--gray-50); }
+  .doc-table td code { font-size: 11.5px; }
+
+  /* ── ALERTS ── */
+  .alert {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 14px 16px; border-radius: 10px; margin: 12px 0;
+    font-size: 13px; line-height: 1.6;
+  }
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .alert.warning { background: var(--yellow-soft); border: 1px solid #fde68a; color: #92400e; }
+  .alert.info { background: var(--blue-soft); border: 1px solid #bfdbfe; color: #1e40af; }
+  .alert.success { background: var(--green-soft); border: 1px solid #bbf7d0; color: #166534; }
+  .alert.danger { background: var(--red-soft); border: 1px solid #fecaca; color: #991b1b; }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 700; padding: 2px 8px;
+    border-radius: 20px; text-transform: uppercase; letter-spacing: .04em;
+  }
+  .tag-get { background: var(--green-soft); color: var(--green-dark); }
+  .tag-post { background: var(--blue-soft); color: #1565c0; }
+  .tag-patch { background: var(--yellow-soft); color: #7c5e00; }
+  .tag-yes { background: var(--green-soft); color: var(--green-dark); }
+  .tag-no { background: var(--red-soft); color: #991b1b; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 8px 0 16px; }
+  .checklist li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--gray-700); }
+  .check-done { color: var(--green); font-size: 14px; flex-shrink: 0; }
+  .check-todo { color: var(--red); font-size: 14px; flex-shrink: 0; }
+  .check-soon { color: var(--yellow); font-size: 14px; flex-shrink: 0; }
+
+  /* ── PHASE CARDS ── */
+  .phases { display: flex; flex-direction: column; gap: 8px; margin: 12px 0 20px; }
+  .phase-card {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px; border-radius: 10px;
+    border: 1px solid var(--gray-200); background: #fff;
+  }
+  .phase-num {
+    width: 28px; height: 28px; border-radius: 8px;
+    font-size: 12px; font-weight: 800; color: #fff;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .phase-info .phase-name { font-weight: 700; font-size: 13px; color: var(--gray-900); }
+  .phase-info .phase-desc { font-size: 12px; color: var(--gray-500); margin-top: 1px; }
+
+  /* ── QUICK REF ── */
+  .cmd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+  .cmd-card { background: var(--gray-900); border-radius: 10px; padding: 16px 18px; }
+  .cmd-card .cmd-title { font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+  .cmd-card pre { background: transparent; border: none; padding: 0; margin: 0; font-size: 12px; }
+
+  /* ── ROADMAP ── */
+  .roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 12px 0 20px; }
+  .roadmap-col { background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden; }
+  .roadmap-header { padding: 10px 14px; font-size: 12px; font-weight: 700; }
+  .roadmap-items { padding: 8px 14px 14px; display: flex; flex-direction: column; gap: 6px; }
+  .roadmap-item { font-size: 12px; color: var(--gray-600); display: flex; align-items: flex-start; gap: 6px; }
+  .roadmap-item::before { content: '→'; color: var(--gray-400); flex-shrink: 0; }
+
+  /* ── ENV VARS ── */
+  .env-var { display: flex; flex-direction: column; gap: 2px; padding: 10px 0; border-bottom: 1px solid var(--gray-100); }
+  .env-var:last-child { border-bottom: none; }
+  .env-key { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; color: var(--green-dark); }
+  .env-desc { font-size: 12px; color: var(--gray-500); }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 24px 20px 60px; }
+    .cmd-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <a href="#overview" class="header-logo">🇱🇹 Lith<span>Lingo</span></a>
+  <span class="header-badge">v1.0 Docs</span>
+</header>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="nav-section-label">Getting Started</div>
+  <a href="#overview" class="nav-link active"><span class="nav-icon">🏠</span> Overview</a>
+  <a href="#setup" class="nav-link"><span class="nav-icon">⚙️</span> Setup & Installation</a>
+  <a href="#structure" class="nav-link"><span class="nav-icon">📁</span> Folder Structure</a>
+
+  <div class="nav-section-label">Core Concepts</div>
+  <a href="#auth" class="nav-link"><span class="nav-icon">🔐</span> Authentication</a>
+  <a href="#api" class="nav-link"><span class="nav-icon">🔌</span> API Services</a>
+  <a href="#features" class="nav-link"><span class="nav-icon">✨</span> Features</a>
+
+  <div class="nav-section-label">Frontend</div>
+  <a href="#components" class="nav-link"><span class="nav-icon">🧩</span> Components</a>
+  <a href="#state" class="nav-link"><span class="nav-icon">🗂️</span> State Management</a>
+  <a href="#routing" class="nav-link"><span class="nav-icon">🗺️</span> Routing</a>
+  <a href="#cookies" class="nav-link"><span class="nav-icon">🍪</span> Cookie Consent</a>
+
+  <div class="nav-section-label">Reference</div>
+  <a href="#conventions" class="nav-link"><span class="nav-icon">📐</span> Conventions</a>
+  <a href="#env" class="nav-link"><span class="nav-icon">🔑</span> Environment Vars</a>
+  <a href="#deployment" class="nav-link"><span class="nav-icon">🚀</span> Deployment</a>
+  <a href="#issues" class="nav-link"><span class="nav-icon">🐛</span> Known Issues</a>
+  <a href="#quickref" class="nav-link"><span class="nav-icon">⚡</span> Quick Reference</a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- ── 1. OVERVIEW ── -->
+  <section class="doc-section" id="overview">
+    <h1 class="page-title">LithLingo Documentation</h1>
+    <p class="page-subtitle">Complete technical reference for the Lithuanian language learning platform.</p>
+
+    <h2 class="section-title">
+      <span class="icon" style="background:#f0fce8">🇱🇹</span> What is LithLingo?
+    </h2>
+    <p>LithLingo is a <strong>full-stack Lithuanian language learning platform</strong> that gamifies learning through interactive lessons, exercises, listening activities, streak tracking, XP rewards, and daily quests.</p>
+
+    <div class="card-grid">
+      <div class="card-sm"><div class="card-label">Frontend</div><div class="card-value">React + Vite</div></div>
+      <div class="card-sm"><div class="card-label">Backend</div><div class="card-value">Django REST</div></div>
+      <div class="card-sm"><div class="card-label">Database</div><div class="card-value">PostgreSQL</div></div>
+      <div class="card-sm"><div class="card-label">Cache</div><div class="card-value">Redis</div></div>
+    </div>
+
+    <h3>Frontend Stack</h3>
+    <div class="stack-grid">
+      <span class="stack-badge green">React 19.2.4</span>
+      <span class="stack-badge green">Vite 8.0.4</span>
+      <span class="stack-badge blue">React Router 7.14</span>
+      <span class="stack-badge blue">TailwindCSS 4.2</span>
+      <span class="stack-badge">Axios</span>
+      <span class="stack-badge">React Query</span>
+      <span class="stack-badge purple">Lottie React</span>
+      <span class="stack-badge">DiceBear Avatars</span>
+      <span class="stack-badge">Lucide Icons</span>
+    </div>
+
+    <h3>Backend Stack</h3>
+    <div class="stack-grid">
+      <span class="stack-badge orange">Django 6.0.3</span>
+      <span class="stack-badge orange">DRF 3.17.1</span>
+      <span class="stack-badge">PostgreSQL</span>
+      <span class="stack-badge">Redis</span>
+      <span class="stack-badge">Simple JWT</span>
+      <span class="stack-badge purple">gTTS (Audio)</span>
+      <span class="stack-badge">Pillow</span>
+    </div>
+
+    <h3>Target Users</h3>
+    <ul class="checklist">
+      <li><span class="check-done">✓</span> Lithuanian language learners (beginner → intermediate)</li>
+      <li><span class="check-done">✓</span> Students who benefit from gamified, structured learning</li>
+      <li><span class="check-done">✓</span> Learners who need audio pronunciation guides</li>
+      <li><span class="check-done">✓</span> Users building daily habits via streak tracking</li>
+    </ul>
+  </section>
+
+  <!-- Roles  -->
+   <h2 class="section-title"><span class="icon" style="background:#e8f7fe">👨‍💻</span> Project Role and Responsibilities</h2>
+   
+  <table class="doc-table" style="margin-top:16px">
+  <tr>
+    <th>Name</th>
+    <th>Role</th>
+    <th>Email</th>
+  </tr>
+  <tr>
+    <td><strong>Muhammad Asfer Saeed</strong></td>
+    <td><span class="tag tag-get">Full Stack Developer</span></td>
+    <td><a href="mailto:muhammadasfer.saeed@stud.smk.lt" style="color:#1cb0f6">muhammadasfer.saeed@stud.smk.lt</a></td>
+  </tr>
+  <tr>
+    <td><strong>Anas Rasheed</strong></td>
+    <td><span class="tag tag-patch">Project Planner</span></td>
+    <td><a href="mailto:anas.rasheed@stud.smk.lt" style="color:#1cb0f6">anas.rasheed@stud.smk.lt</a></td>
+  </tr>
+  <tr>
+    <td><strong>Awais Ali</strong></td>
+    <td><span class="tag" style="background:#faf5ff;color:#7e22ce">UI/UX Designer</span></td>
+    <td><a href="mailto:awais.ali1@stud.smk.lt" style="color:#1cb0f6">awais.ali1@stud.smk.lt</a></td>
+  </tr>
+</table>
+
+  <!-- ── 2. SETUP ── -->
+  <section class="doc-section" id="setup">
+    <h2 class="section-title"><span class="icon" style="background:#e8f7fe">⚙️</span> Setup & Installation</h2>
+
+    <h3>Prerequisites</h3>
+    <div class="card-grid">
+      <div class="card-sm"><div class="card-label">Node.js</div><div class="card-value">18+</div></div>
+      <div class="card-sm"><div class="card-label">Python</div><div class="card-value">3.10+</div></div>
+      <div class="card-sm"><div class="card-label">PostgreSQL</div><div class="card-value">12+</div></div>
+      <div class="card-sm"><div class="card-label">Redis</div><div class="card-value">6+</div></div>
+    </div>
+
+    <h3>Clone the Repository</h3>
+    <pre><span class="code-green">git clone</span> https://github.com/yourusername/lithlingo.git
+<span class="code-green">cd</span> lithlingo</pre>
+
+    <h3>Frontend Setup</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Navigate & install</div><pre>cd frontend
+npm install</pre></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Create <code>.env</code> file in <code>frontend/</code></div><pre>VITE_API_URL=http://localhost:8000/api</pre></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Run dev server</div><pre>npm run dev  <span class="code-comment"># → http://localhost:5173</span></pre></div></div>
+    </div>
+
+    <h3>Backend Setup</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Create virtual environment</div><pre>cd backend
+python -m venv venv
+source venv/bin/activate  <span class="code-comment"># Windows: venv\Scripts\activate</span>
+pip install -r requirements.txt</pre></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Create <code>.env</code> in <code>backend/</code></div><div class="step-desc">See Environment Variables section for all required keys.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Setup database</div><pre>psql -U postgres -c "CREATE DATABASE lithlingo;"
+python manage.py migrate
+python manage.py createsuperuser</pre></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Run dev server</div><pre>python manage.py runserver  <span class="code-comment"># → http://localhost:8000</span></pre></div></div>
+    </div>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <div>Run <strong>two terminals simultaneously</strong> — one for frontend (<code>npm run dev</code>), one for backend (<code>python manage.py runserver</code>). Vite auto-proxies <code>/api/*</code> requests to port 8000.</div>
+    </div>
+
+    <h3>Verify Installation</h3>
+    <table class="doc-table">
+      <tr><th>Service</th><th>URL</th><th>Expected</th></tr>
+      <tr><td>Frontend</td><td><code>http://localhost:5173</code></td><td>Landing page</td></tr>
+      <tr><td>Backend API</td><td><code>http://localhost:8000/api/courses/sections/</code></td><td>JSON (401 if not logged in)</td></tr>
+      <tr><td>Django Admin</td><td><code>http://localhost:8000/admin</code></td><td>Admin login panel</td></tr>
+    </table>
+  </section>
+
+  <!-- ── 3. STRUCTURE ── -->
+  <section class="doc-section" id="structure">
+    <h2 class="section-title"><span class="icon" style="background:#faf5ff">📁</span> Folder Structure</h2>
+
+    <h3>Frontend</h3>
+    <pre><span class="code-blue">frontend/src/</span>
+├── <span class="code-green">main.jsx</span>              <span class="code-comment"># React entry point</span>
+├── <span class="code-green">App.jsx</span>               <span class="code-comment"># Root component — all routes defined here</span>
+├── <span class="code-green">index.css</span>             <span class="code-comment"># Global styles</span>
+│
+├── <span class="code-yellow">components/</span>           <span class="code-comment"># Reusable UI components</span>
+│   ├── common/           <span class="code-comment"># CookieBanner, MetaTags, PageLoader, UserAvatar</span>
+│   ├── ui/               <span class="code-comment"># Button, Input, PasswordInput, SpeakerButton...</span>
+│   ├── dashboardPage/    <span class="code-comment"># Layout.jsx (3-column dashboard shell)</span>
+│   └── layout/           <span class="code-comment"># Sidebar, RightPanel, Header, LessonPath</span>
+│
+├── <span class="code-yellow">pages/</span>                <span class="code-comment"># One file per route</span>
+│   ├── LandingPage.jsx   <span class="code-comment"># Public (eager loaded)</span>
+│   ├── login.jsx         <span class="code-comment"># Lazy loaded</span>
+│   ├── DashboardPage.jsx <span class="code-comment"># Lazy loaded — protected</span>
+│   └── ...               <span class="code-comment"># All other pages lazy loaded</span>
+│
+├── <span class="code-yellow">features/lesson/</span>      <span class="code-comment"># Lesson engine</span>
+│   ├── LessonPage.jsx    <span class="code-comment"># Main lesson container</span>
+│   └── phases/           <span class="code-comment"># Grammar, Vocabulary, Exercise, Listening, Completion</span>
+│
+├── <span class="code-yellow">context/</span>              <span class="code-comment"># React Context</span>
+│   ├── AuthContext.jsx   <span class="code-comment"># Auth state and user data</span>
+│   ├── StatsContext.jsx  <span class="code-comment"># Streak, XP, progress</span>
+│   └── ProtectedRoute.jsx <span class="code-comment"># Route guard</span>
+│
+├── <span class="code-yellow">services/</span>             <span class="code-comment"># API layer</span>
+│   ├── api.js            <span class="code-comment"># Axios instance + interceptors</span>
+│   └── lessonService.js  <span class="code-comment"># All API functions</span>
+│
+├── <span class="code-yellow">hooks/</span>                <span class="code-comment"># useMicrophone.js</span>
+├── <span class="code-yellow">utils/</span>                <span class="code-comment"># logger, passwordValidation, passwordStrength</span>
+└── <span class="code-yellow">theme/</span>                <span class="code-comment"># lessonThemes.js (4 color themes)</span></pre>
+
+    <h3>Backend</h3>
+    <pre><span class="code-blue">backend/</span>
+├── <span class="code-green">manage.py</span>
+├── <span class="code-green">requirements.txt</span>
+│
+├── <span class="code-yellow">core/</span>                 <span class="code-comment"># Django project config</span>
+│   ├── settings.py       <span class="code-comment"># DB, auth, CORS, JWT config</span>
+│   └── urls.py           <span class="code-comment"># Root URL router</span>
+│
+├── <span class="code-yellow">accounts/</span>             <span class="code-comment"># User authentication app</span>
+│   ├── models.py         <span class="code-comment"># Custom User model (email-based)</span>
+│   ├── views.py          <span class="code-comment"># register, login, logout, verify, reset</span>
+│   ├── serializers.py
+│   ├── authentication.py <span class="code-comment"># CookieJWTAuthentication class</span>
+│   └── urls.py
+│
+├── <span class="code-yellow">courses/</span>              <span class="code-comment"># Content app</span>
+│   ├── models/           <span class="code-comment"># course, exercise, grammar, listening, progress</span>
+│   ├── services/         <span class="code-comment"># lesson, progression, streak, audio services</span>
+│   ├── views.py
+│   ├── serializers.py
+│   └── urls.py
+│
+└── <span class="code-yellow">media/</span>                <span class="code-comment"># Auto-generated audio files</span>
+    └── audio/
+        ├── listening/    <span class="code-comment"># Listening exercise MP3s</span>
+        └── words/        <span class="code-comment"># Word pronunciation MP3s</span></pre>
+
+    <h3>Where to find what</h3>
+    <table class="doc-table">
+      <tr><th>Task</th><th>Location</th></tr>
+      <tr><td>Add new page</td><td><code>src/pages/</code> + route in <code>App.jsx</code></td></tr>
+      <tr><td>Add UI component</td><td><code>src/components/ui/</code></td></tr>
+      <tr><td>Add API function</td><td><code>src/services/lessonService.js</code></td></tr>
+      <tr><td>Add lesson phase</td><td><code>src/features/lesson/phases/</code> + update <code>LessonPage.jsx</code></td></tr>
+      <tr><td>Add Django model</td><td><code>backend/courses/models/</code></td></tr>
+      <tr><td>Add API endpoint</td><td><code>backend/courses/views.py</code> + <code>urls.py</code></td></tr>
+      <tr><td>Auth logic</td><td><code>backend/accounts/</code></td></tr>
+      <tr><td>Audio generation</td><td><code>backend/courses/services/audio_service.py</code></td></tr>
+    </table>
+  </section>
+
+  <!-- ── 4. AUTH ── -->
+  <section class="doc-section" id="auth">
+    <h2 class="section-title"><span class="icon" style="background:#fff0f0">🔐</span> Authentication Flow</h2>
+
+    <h3>Registration</h3>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot" style="background:#58cc02;color:#fff">1</div><div class="flow-text">User fills form — email, password, name, gender</div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#58cc02;color:#fff">2</div><div class="flow-text"><strong>POST</strong> <code>/api/auth/register/</code> — backend validates email uniqueness + password complexity</div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#58cc02;color:#fff">3</div><div class="flow-text">Creates User with <code>is_verified=False</code>, generates <code>verification_token</code> (UUID) + <code>avatar_seed</code></div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#58cc02;color:#fff">4</div><div class="flow-text">Auto-creates <code>UserLessonProgress</code> for first lesson of each unit</div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#58cc02;color:#fff">5</div><div class="flow-text">Sends verification email → user clicks link → <strong>GET</strong> <code>/api/auth/verify-email/{token}</code></div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#58cc02;color:#fff">6</div><div class="flow-text">Backend sets <code>is_verified=True</code> → frontend redirects to login</div></div>
+    </div>
+
+    <h3>Login & JWT Token Flow</h3>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot" style="background:#1cb0f6;color:#fff">1</div><div class="flow-text"><strong>POST</strong> <code>/api/auth/login/</code> with email + password</div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#1cb0f6;color:#fff">2</div><div class="flow-text">Backend validates: user exists, password correct, <code>is_active</code>, <code>is_verified</code></div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#1cb0f6;color:#fff">3</div><div class="flow-text">Generates <strong>access token</strong> (15 min) + <strong>refresh token</strong> (7 days) → set as <code>HttpOnly</code> cookies</div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#1cb0f6;color:#fff">4</div><div class="flow-text">Frontend stores user data in <code>AuthContext</code></div></div>
+    </div>
+
+    <h3>Automatic Token Refresh</h3>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot" style="background:#ffc800;color:#fff">1</div><div class="flow-text">API request fails with <strong>401</strong> (access token expired)</div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#ffc800;color:#fff">2</div><div class="flow-text">Axios interceptor catches 401 → auto <strong>POST</strong> <code>/api/auth/token/refresh/</code></div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#ffc800;color:#fff">3</div><div class="flow-text">Backend validates refresh token → issues new access + refresh (old token blacklisted in Redis)</div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#ffc800;color:#fff">4</div><div class="flow-text">Interceptor retries original request with new token. If refresh fails → redirect to <code>/login</code></div></div>
+    </div>
+
+    <div class="alert warning">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>ROTATE_REFRESH_TOKENS = True</strong> — every refresh generates a new refresh token and blacklists the old one. This prevents token reuse attacks.</div>
+    </div>
+
+    <h3>Authentication Endpoints</h3>
+    <table class="doc-table">
+      <tr><th>Endpoint</th><th>Method</th><th>Auth</th><th>Rate Limit</th><th>Purpose</th></tr>
+      <tr><td><code>/api/auth/register/</code></td><td><span class="tag tag-post">POST</span></td><td><span class="tag tag-no">No</span></td><td>3/hour</td><td>Create account</td></tr>
+      <tr><td><code>/api/auth/login/</code></td><td><span class="tag tag-post">POST</span></td><td><span class="tag tag-no">No</span></td><td>5/min</td><td>Login + get tokens</td></tr>
+      <tr><td><code>/api/auth/logout/</code></td><td><span class="tag tag-post">POST</span></td><td><span class="tag tag-yes">Yes</span></td><td>20/min</td><td>Logout + blacklist</td></tr>
+      <tr><td><code>/api/auth/user/</code></td><td><span class="tag tag-get">GET</span></td><td><span class="tag tag-yes">Yes</span></td><td>—</td><td>Current user profile</td></tr>
+      <tr><td><code>/api/auth/user/</code></td><td><span class="tag tag-patch">PATCH</span></td><td><span class="tag tag-yes">Yes</span></td><td>—</td><td>Update profile</td></tr>
+      <tr><td><code>/api/auth/token/refresh/</code></td><td><span class="tag tag-post">POST</span></td><td><span class="tag tag-no">No</span></td><td>—</td><td>Refresh access token</td></tr>
+      <tr><td><code>/api/auth/verify-email/{token}/</code></td><td><span class="tag tag-get">GET</span></td><td><span class="tag tag-no">No</span></td><td>10/hour</td><td>Verify email</td></tr>
+      <tr><td><code>/api/auth/forgot-password/</code></td><td><span class="tag tag-post">POST</span></td><td><span class="tag tag-no">No</span></td><td>3/hour</td><td>Request reset</td></tr>
+      <tr><td><code>/api/auth/reset-password/</code></td><td><span class="tag tag-post">POST</span></td><td><span class="tag tag-no">No</span></td><td>10/hour</td><td>Reset password</td></tr>
+    </table>
+  </section>
+
+  <!-- ── 5. API ── -->
+  <section class="doc-section" id="api">
+    <h2 class="section-title"><span class="icon" style="background:#e8f7fe">🔌</span> API Services</h2>
+
+    <p>All API calls live in <code>frontend/src/services/lessonService.js</code> and use the Axios instance from <code>services/api.js</code>.</p>
+
+    <h3>Core Functions</h3>
+    <table class="doc-table">
+      <tr><th>Function</th><th>Endpoint</th><th>Returns</th></tr>
+      <tr><td><code>getSections(page)</code></td><td><span class="tag tag-get">GET</span> <code>/courses/sections/</code></td><td>Paginated sections + units + lessons</td></tr>
+      <tr><td><code>getLessons(unitId, page)</code></td><td><span class="tag tag-get">GET</span> <code>/courses/units/{id}/lessons/</code></td><td>Lessons for a unit</td></tr>
+      <tr><td><code>getLessonDetail(lessonId)</code></td><td><span class="tag tag-get">GET</span> <code>/courses/{id}/</code></td><td>Full lesson — words, grammar, exercises, listening</td></tr>
+      <tr><td><code>checkAnswer(exerciseId, answer)</code></td><td><span class="tag tag-post">POST</span> <code>/courses/exercise/{id}/check/</code></td><td><code>{ is_correct, correct_answer, xp_earned }</code></td></tr>
+      <tr><td><code>checkListeningAnswer(questionId, optionId)</code></td><td><span class="tag tag-post">POST</span> <code>/courses/listening-question/{id}/check/</code></td><td><code>{ is_correct, xp_earned }</code></td></tr>
+      <tr><td><code>completeLesson(lessonId)</code></td><td><span class="tag tag-post">POST</span> <code>/courses/{id}/complete/</code></td><td><code>{ message, xp_earned }</code></td></tr>
+      <tr><td><code>getUserStats()</code></td><td><span class="tag tag-get">GET</span> <code>/courses/stats/</code></td><td>Streak, XP, progress %, daily goal</td></tr>
+    </table>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <div><strong>Rate limits:</strong> <code>checkAnswer</code> and <code>checkListeningAnswer</code> are limited to 120 req/min. <code>completeLesson</code> is limited to 60 req/min.</div>
+    </div>
+
+    <h3>Lesson Detail Response Shape</h3>
+    <pre>{
+  <span class="code-blue">"id"</span>: 1, <span class="code-blue">"title"</span>: <span class="code-green">"Hello & Goodbye"</span>,
+  <span class="code-blue">"xp_reward"</span>: 10, <span class="code-blue">"is_completed"</span>: false, <span class="code-blue">"is_unlocked"</span>: true,
+
+  <span class="code-blue">"words"</span>: [{ <span class="code-blue">"lithuanian"</span>, <span class="code-blue">"english"</span>, <span class="code-blue">"pronunciation"</span>, <span class="code-blue">"audio_url"</span>, <span class="code-blue">"image_url"</span> }],
+
+  <span class="code-blue">"grammar_rules"</span>: [{ <span class="code-blue">"title"</span>, <span class="code-blue">"explanation"</span>, <span class="code-blue">"example"</span>, <span class="code-blue">"order"</span> }],
+
+  <span class="code-blue">"exercises"</span>: [{
+    <span class="code-blue">"type"</span>: <span class="code-green">"multiple_choice"</span>, <span class="code-comment">// or fill_blank, matching</span>
+    <span class="code-blue">"question"</span>: <span class="code-green">"..."</span>,
+    <span class="code-blue">"options"</span>: [{ <span class="code-blue">"id"</span>, <span class="code-blue">"text"</span>, <span class="code-blue">"is_correct"</span> }]
+  }],
+
+  <span class="code-blue">"listening_exercises"</span>: [{
+    <span class="code-blue">"audio_url"</span>, <span class="code-blue">"transcript_lt"</span>, <span class="code-blue">"transcript_en"</span>,
+    <span class="code-blue">"questions"</span>: [{ <span class="code-blue">"question_lt"</span>, <span class="code-blue">"question_en"</span>, <span class="code-blue">"options"</span>: [...] }]
+  }]
+}</pre>
+  </section>
+
+  <!-- ── 6. FEATURES ── -->
+  <section class="doc-section" id="features">
+    <h2 class="section-title"><span class="icon" style="background:#f0fce8">✨</span> Features</h2>
+
+    <h3>Lesson Structure</h3>
+    <p>Lessons are organized in a hierarchy: <strong>Section → Unit → Lesson</strong>. Each lesson has 5 phases:</p>
+
+    <div class="phases">
+      <div class="phase-card"><div class="phase-num" style="background:#7c3aed">1</div><div class="phase-info"><div class="phase-name">Grammar</div><div class="phase-desc">Rule explanations with examples</div></div></div>
+      <div class="phase-card"><div class="phase-num" style="background:#1cb0f6">2</div><div class="phase-info"><div class="phase-name">Vocabulary</div><div class="phase-desc">Words with audio, translation, images</div></div></div>
+      <div class="phase-card"><div class="phase-num" style="background:#ff9600">3</div><div class="phase-info"><div class="phase-name">Listening</div><div class="phase-desc">Audio clip + comprehension MCQs</div></div></div>
+      <div class="phase-card"><div class="phase-num" style="background:#58cc02">4</div><div class="phase-info"><div class="phase-name">Exercises</div><div class="phase-desc">Multiple choice, fill-blank, matching</div></div></div>
+      <div class="phase-card"><div class="phase-num" style="background:#ff4b4b">5</div><div class="phase-info"><div class="phase-name">Completion</div><div class="phase-desc">XP reward + next lesson unlock</div></div></div>
+    </div>
+
+    <h3>Exercise Types</h3>
+    <table class="doc-table">
+      <tr><th>Type</th><th>UI</th><th>Answer Logic</th></tr>
+      <tr><td><code>multiple_choice</code></td><td>2×2 button grid, select then Check</td><td>Case-insensitive string match</td></tr>
+      <tr><td><code>fill_blank</code></td><td>Text input field</td><td>Case-insensitive string match</td></tr>
+      <tr><td><code>matching</code></td><td>Drag-and-drop two columns</td><td>Validates against MatchingPair model</td></tr>
+      <tr><td><code>listening</code></td><td>Audio player + MCQ options</td><td><code>ListeningOption.is_correct</code> flag</td></tr>
+    </table>
+
+    <h3>Lesson Progression</h3>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot" style="background:#58cc02;color:#fff">→</div><div class="flow-text">First lesson of first unit: <strong>auto-unlocked</strong> on registration</div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#58cc02;color:#fff">→</div><div class="flow-text">User completes lesson → <code>completeLesson()</code> called</div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#58cc02;color:#fff">→</div><div class="flow-text">Backend unlocks <code>order + 1</code> in same unit, or first lesson of next unit</div></div>
+      <div class="flow-item"><div class="flow-dot" style="background:#58cc02;color:#fff">→</div><div class="flow-text">User earns XP (<code>xp_reward</code> on lesson) + streak updated</div></div>
+    </div>
+
+    <h3>Streak System</h3>
+    <pre><span class="code-comment"># streak_service.py logic</span>
+<span class="code-blue">if</span> last_active == today:     skip (already counted today)
+<span class="code-blue">elif</span> last_active == yesterday: current_streak += 1
+<span class="code-blue">else</span>:                         current_streak = 1  <span class="code-comment"># reset</span>
+
+update longest_streak if current > longest
+set last_active = today</pre>
+  </section>
+
+  <!-- ── 7. COMPONENTS ── -->
+  <section class="doc-section" id="components">
+    <h2 class="section-title"><span class="icon" style="background:#faf5ff">🧩</span> Components</h2>
+
+    <h3>Common Components</h3>
+    <table class="doc-table">
+      <tr><th>Component</th><th>Props</th><th>Purpose</th></tr>
+      <tr><td><code>CookieBanner</code></td><td>None</td><td>Cookie consent popup — shows 800ms after mount, saves to localStorage</td></tr>
+      <tr><td><code>UserAvatar</code></td><td><code>gender</code>, <code>seed</code>, <code>size</code></td><td>DiceBear avatar — URL: <code>api.dicebear.com/9.x/adventurer/svg?seed={gender}-{seed}</code></td></tr>
+      <tr><td><code>MetaTags</code></td><td><code>title</code>, <code>description</code>, <code>image?</code>, <code>url?</code></td><td>SEO meta + OpenGraph + Twitter card tags</td></tr>
+      <tr><td><code>PageLoader</code></td><td>None</td><td>Full-screen loading spinner — used in Suspense boundary</td></tr>
+    </table>
+
+    <h3>UI Components</h3>
+    <table class="doc-table">
+      <tr><th>Component</th><th>Key Props</th><th>Notes</th></tr>
+      <tr><td><code>Button</code></td><td><code>variant</code>, <code>size</code>, <code>onClick</code></td><td>Variants: primary, secondary, danger, circle, vocabbtn, checkbtn</td></tr>
+      <tr><td><code>Inputbtn</code></td><td><code>placeholder</code>, <code>value</code>, <code>onChange</code></td><td>Standard text input</td></tr>
+      <tr><td><code>PasswordInput</code></td><td><code>value</code>, <code>onChange</code></td><td>Show/hide toggle built in</td></tr>
+      <tr><td><code>PasswordStrength</code></td><td><code>password</code></td><td>Red → Orange → Green bar based on complexity rules</td></tr>
+      <tr><td><code>SpeakerButton</code></td><td><code>onClick</code></td><td>Audio play button used in vocabulary cards</td></tr>
+      <tr><td><code>FeedbackBar</code></td><td><code>feedback</code>, <code>onContinue</code>, <code>continueLabel</code></td><td>Fixed bottom bar — types: correct / wrong / failed</td></tr>
+    </table>
+
+    <h3>Lesson Components</h3>
+    <table class="doc-table">
+      <tr><th>Component</th><th>Location</th><th>Purpose</th></tr>
+      <tr><td><code>LessonPage</code></td><td><code>features/lesson/</code></td><td>Main container — orchestrates all phases</td></tr>
+      <tr><td><code>GrammarPhase</code></td><td><code>phases/</code></td><td>Renders grammar rules with examples</td></tr>
+      <tr><td><code>VocabularyPhase</code></td><td><code>phases/</code></td><td>Word cards with audio + translation reveal</td></tr>
+      <tr><td><code>ListeningPhase</code></td><td><code>phases/</code></td><td>Audio player + comprehension questions</td></tr>
+      <tr><td><code>ExercisePhase</code></td><td><code>phases/</code></td><td>Routes to correct exercise component by type</td></tr>
+      <tr><td><code>MultipleChoice</code></td><td><code>exercises/</code></td><td>2×2 grid, select + Check button</td></tr>
+      <tr><td><code>FillBlankExercise</code></td><td><code>exercises/</code></td><td>Text input answer</td></tr>
+      <tr><td><code>MatchingExercise</code></td><td><code>exercises/</code></td><td>Drag-and-drop pairs</td></tr>
+      <tr><td><code>ListeningExercise</code></td><td><code>listening/</code></td><td>Shell with audio + questions list</td></tr>
+      <tr><td><code>ListeningQuestion</code></td><td><code>listening/</code></td><td>Single question + translation toggle</td></tr>
+      <tr><td><code>ListeningOptions</code></td><td><code>listening/</code></td><td>Pure display options with feedback styling</td></tr>
+    </table>
+  </section>
+
+  <!-- ── 8. STATE ── -->
+  <section class="doc-section" id="state">
+    <h2 class="section-title"><span class="icon" style="background:#fff7ed">🗂️</span> State Management</h2>
+
+    <h3>AuthContext</h3>
+    <p>Located at <code>src/context/AuthContext.jsx</code>. Wraps the entire app.</p>
+    <pre><span class="code-comment">// What it provides:</span>
+const { 
+  user,          <span class="code-comment">// { id, email, first_name, last_name, gender, bio, avatar_seed, date_joined }</span>
+  isLoading,     <span class="code-comment">// true while checking auth on mount</span>
+  login,         <span class="code-comment">// (email, password) → sets user</span>
+  logout,        <span class="code-comment">// clears user + cookies</span>
+  updateUser,    <span class="code-comment">// updates user fields locally after PATCH</span>
+} = useAuth();</pre>
+
+    <h3>StatsContext</h3>
+    <p>Located at <code>src/context/StatsContext.jsx</code>. Provides streak and progress data to the right panel.</p>
+    <pre><span class="code-comment">// What it provides:</span>
+const {
+  stats,         <span class="code-comment">// { current_streak, longest_streak, completed_lessons, progress_percentage, daily_goal, daily_completed }</span>
+  refreshStats,  <span class="code-comment">// call after completing a lesson</span>
+} = useStats();</pre>
+
+    <h3>Local State</h3>
+    <p>Each exercise component manages its own answer/feedback state. <code>localStorage</code> is used only for cookie consent (<code>cookie_consent</code> key).</p>
+
+    <div class="alert success">
+      <span class="alert-icon">✅</span>
+      <div>React Query handles server state caching automatically. No manual cache invalidation needed for most data fetches.</div>
+    </div>
+  </section>
+
+  <!-- ── 9. ROUTING ── -->
+  <section class="doc-section" id="routing">
+    <h2 class="section-title"><span class="icon" style="background:#e8f7fe">🗺️</span> Routing</h2>
+
+    <h3>Public Routes (inside PublicLayout)</h3>
+    <table class="doc-table">
+      <tr><th>Path</th><th>Component</th><th>Lazy</th></tr>
+      <tr><td><code>/</code></td><td>LandingPage</td><td>No (eager)</td></tr>
+      <tr><td><code>/login</code></td><td>Login</td><td>Yes</td></tr>
+      <tr><td><code>/register</code></td><td>Register</td><td>Yes</td></tr>
+      <tr><td><code>/verify-email/:token</code></td><td>EmailVerification</td><td>Yes</td></tr>
+      <tr><td><code>/forgot-password</code></td><td>ForgetPassword</td><td>Yes</td></tr>
+      <tr><td><code>/reset-password/:token</code></td><td>ResetPassword</td><td>Yes</td></tr>
+      <tr><td><code>/privacy</code></td><td>PrivacyPolicy</td><td>Yes</td></tr>
+    </table>
+
+    <h3>Protected Routes (inside ProtectedRoute + Layout)</h3>
+    <table class="doc-table">
+      <tr><th>Path</th><th>Component</th></tr>
+      <tr><td><code>/dashboard</code></td><td>DashboardPage</td></tr>
+      <tr><td><code>/leaderboard</code></td><td>Leaderboard (Coming Soon)</td></tr>
+      <tr><td><code>/learn/:page</code></td><td>LessonPath</td></tr>
+      <tr><td><code>/quests</code></td><td>Quest (Coming Soon)</td></tr>
+      <tr><td><code>/profile</code></td><td>Profile</td></tr>
+      <tr><td><code>/lesson/:id</code></td><td>LessonPage</td></tr>
+    </table>
+
+    <h3>Catch-all</h3>
+    <table class="doc-table">
+      <tr><th>Path</th><th>Component</th></tr>
+      <tr><td><code>*</code></td><td>NotFound (404 page)</td></tr>
+    </table>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <div>All routes except <code>LandingPage</code> and <code>Layout</code> are <strong>lazy loaded</strong> with <code>React.lazy()</code>. The <code>Suspense</code> boundary wraps the entire app and shows <code>PageLoader</code> while chunks download.</div>
+    </div>
+  </section>
+
+  <!-- ── 10. COOKIES ── -->
+  <section class="doc-section" id="cookies">
+    <h2 class="section-title"><span class="icon" style="background:#fffbe6">🍪</span> Cookie Consent</h2>
+
+    <p>The <code>CookieBanner</code> component is mounted in <code>PublicLayout</code> — it appears on all public pages for logged-out users only.</p>
+
+    <h3>Categories</h3>
+    <table class="doc-table">
+      <tr><th>Category</th><th>Toggleable</th><th>What it covers</th></tr>
+      <tr><td>Essential</td><td>No — always on</td><td>Login session, JWT cookies, CSRF protection</td></tr>
+      <tr><td>Preferences</td><td>Yes</td><td>Theme, settings, UI preferences between visits</td></tr>
+    </table>
+
+    <h3>localStorage Schema</h3>
+    <pre><span class="code-comment">// Key: "cookie_consent"</span>
+{
+  <span class="code-blue">"essential"</span>: true,
+  <span class="code-blue">"preferences"</span>: true,
+  <span class="code-blue">"savedAt"</span>: <span class="code-green">"2025-01-15T10:30:00Z"</span>
+}</pre>
+
+    <p>Banner appears 800ms after mount. Once saved, it never shows again unless the user clears browser storage.</p>
+  </section>
+
+  <!-- ── 11. CONVENTIONS ── -->
+  <section class="doc-section" id="conventions">
+    <h2 class="section-title"><span class="icon" style="background:#f0fce8">📐</span> Key Conventions</h2>
+
+    <h3>Naming</h3>
+    <table class="doc-table">
+      <tr><th>Thing</th><th>Convention</th><th>Example</th></tr>
+      <tr><td>Components</td><td>PascalCase</td><td><code>ListeningExercise.jsx</code></td></tr>
+      <tr><td>Pages</td><td>PascalCase</td><td><code>DashboardPage.jsx</code></td></tr>
+      <tr><td>Services/Utils</td><td>camelCase</td><td><code>lessonService.js</code></td></tr>
+      <tr><td>Hooks</td><td><code>use</code> prefix</td><td><code>useMicrophone.js</code></td></tr>
+      <tr><td>Context</td><td><code>Context</code> suffix</td><td><code>AuthContext.jsx</code></td></tr>
+      <tr><td>Django models</td><td>PascalCase singular</td><td><code>ListeningExercise</code></td></tr>
+      <tr><td>API endpoints</td><td>kebab-case</td><td><code>/listening-question/</code></td></tr>
+    </table>
+
+    <h3>How to Add a New Page</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Create the file</div><div class="step-desc"><code>src/pages/MyPage.jsx</code></div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Lazy import in App.jsx</div><pre>const MyPage = lazy(() => import('./pages/MyPage'));</pre></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add route</div><pre>&lt;Route path="/my-page" element={&lt;MyPage /&gt;} /&gt;</pre><div class="step-desc">Put inside PublicLayout or ProtectedRoute depending on access.</div></div></div>
+    </div>
+
+    <h3>How to Add a New API Endpoint</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Create the view</div><div class="step-desc">Add class-based view in <code>backend/courses/views.py</code> using <code>CookieJWTAuthentication</code></div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Register URL</div><div class="step-desc">Add path in <code>backend/courses/urls.py</code></div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add service function</div><div class="step-desc">Add function in <code>frontend/src/services/lessonService.js</code> using the <code>api</code> Axios instance</div></div></div>
+    </div>
+  </section>
+
+  <!-- ── 12. ENV ── -->
+  <section class="doc-section" id="env">
+    <h2 class="section-title"><span class="icon" style="background:#fff0f0">🔑</span> Environment Variables</h2>
+
+    <div class="alert danger">
+      <span class="alert-icon">🚨</span>
+      <div>Never commit <code>.env</code> files. Always use <code>.env.example</code> with empty values as the committed template.</div>
+    </div>
+
+    <h3>Frontend — <code>frontend/.env</code></h3>
+    <div class="card">
+      <div class="env-var"><div class="env-key">VITE_API_URL</div><div class="env-desc">Backend API base URL. Dev: <code>http://localhost:8000/api</code> — Production: your deployed URL. <strong>Required.</strong></div></div>
+    </div>
+
+    <h3>Backend — <code>backend/.env</code></h3>
+    <div class="card">
+      <div class="env-var"><div class="env-key">DB_NAME / DB_USER / DB_PASSWORD / DB_HOST / DB_PORT</div><div class="env-desc">PostgreSQL connection details. <strong>Required.</strong></div></div>
+      <div class="env-var"><div class="env-key">SECRET_KEY</div><div class="env-desc">Django secret key. Generate with <code>python -c "import secrets; print(secrets.token_hex(50))"</code>. <strong>Required.</strong></div></div>
+      <div class="env-var"><div class="env-key">DEBUG</div><div class="env-desc"><code>True</code> for development, <strong>must be <code>False</code> in production</strong>.</div></div>
+      <div class="env-var"><div class="env-key">ALLOWED_HOSTS</div><div class="env-desc">Comma-separated hostnames. Dev: <code>localhost,127.0.0.1</code>.</div></div>
+      <div class="env-var"><div class="env-key">JWT_ALGORITHM</div><div class="env-desc"><code>HS256</code> — signing algorithm for JWT tokens.</div></div>
+      <div class="env-var"><div class="env-key">EMAIL_HOST / EMAIL_PORT / USER_EMAIL / EMAIL_PASSWORD</div><div class="env-desc">SMTP config for verification emails. Use Gmail App Password.</div></div>
+      <div class="env-var"><div class="env-key">CORS_ALLOWED_ORIGINS / CSRF_TRUSTED_ORIGINS</div><div class="env-desc">Frontend URLs allowed to call the API. Dev: <code>http://localhost:5173</code>.</div></div>
+      <div class="env-var"><div class="env-key">REDIS_URL</div><div class="env-desc">Redis connection. Dev: <code>redis://127.0.0.1:6379/1</code>. Used for JWT blacklist + caching.</div></div>
+      <div class="env-var"><div class="env-key">MEDIA_ROOT</div><div class="env-desc">Absolute path to media directory for audio/image storage.</div></div>
+    </div>
+  </section>
+
+  <!-- ── 13. DEPLOYMENT ── -->
+  <section class="doc-section" id="deployment">
+    <h2 class="section-title"><span class="icon" style="background:#e8f7fe">🚀</span> Deployment</h2>
+
+    <h3>Frontend Build</h3>
+    <pre>npm run build  <span class="code-comment"># Creates optimized output in frontend/dist/</span></pre>
+    <p>Upload <code>dist/</code> to any static host: <strong>Vercel</strong>, <strong>Netlify</strong>, or <strong>Cloudflare Pages</strong>. Set <code>VITE_API_URL</code> to your production API URL.</p>
+
+    <h3>Backend Checklist</h3>
+    <ul class="checklist">
+      <li><span class="check-done">✓</span> Set <code>DEBUG=False</code> in production <code>.env</code></li>
+      <li><span class="check-done">✓</span> Set strong <code>SECRET_KEY</code> (use Python secrets module)</li>
+      <li><span class="check-done">✓</span> Add production domain to <code>ALLOWED_HOSTS</code> and <code>CORS_ALLOWED_ORIGINS</code></li>
+      <li><span class="check-done">✓</span> Run <code>python manage.py collectstatic --noinput</code></li>
+      <li><span class="check-done">✓</span> Use HTTPS only — set <code>Secure</code> flag on cookies</li>
+      <li><span class="check-done">✓</span> Use PostgreSQL (not SQLite)</li>
+      <li><span class="check-done">✓</span> Move <code>media/</code> to S3 or similar cloud storage</li>
+    </ul>
+
+    <h3>Recommended Hosting</h3>
+    <table class="doc-table">
+      <tr><th>Service</th><th>Use for</th><th>Notes</th></tr>
+      <tr><td>Vercel / Netlify</td><td>Frontend</td><td>Free tier, auto-deploy from GitHub</td></tr>
+      <tr><td>Railway / Render</td><td>Django backend</td><td>Easy PostgreSQL + Redis add-ons</td></tr>
+      <tr><td>AWS S3 / Cloudflare R2</td><td>Media files (audio, images)</td><td>Required for production scale</td></tr>
+    </table>
+
+    <h3>Database Backup</h3>
+    <pre><span class="code-comment"># Manual backup</span>
+pg_dump lithlingo_prod > backup.sql
+
+<span class="code-comment"># Restore</span>
+psql lithlingo_prod < backup.sql
+
+<span class="code-comment"># Automated daily (cron)</span>
+0 2 * * * pg_dump lithlingo_prod > /backups/lithlingo_$(date +\%Y-\%m-\%d).sql</pre>
+  </section>
+
+  <!-- ── 14. ISSUES ── -->
+  <section class="doc-section" id="issues">
+    <h2 class="section-title"><span class="icon" style="background:#fff0f0">🐛</span> Known Issues & Future Plans</h2>
+
+    <h3>Current Issues</h3>
+    <table class="doc-table">
+      <tr><th>Issue</th><th>Status</th><th>What's Needed</th></tr>
+      <tr><td>Leaderboard</td><td><span class="tag" style="background:#fff7ed;color:#c2410c">Not built</span></td><td>UserStats comparison view, ranking calculation</td></tr>
+      <tr><td>Quests</td><td><span class="tag" style="background:#fff7ed;color:#c2410c">Not built</span></td><td>Daily quest model, XP multipliers, tracking</td></tr>
+      <tr><td>Analytics</td><td><span class="tag" style="background:#fffbe6;color:#7c5e00">Planned</span></td><td>Plausible (privacy-first, no cookie needed)</td></tr>
+      <tr><td>Settings page</td><td><span class="tag" style="background:#fffbe6;color:#7c5e00">Partial</span></td><td>Password change, preferences panel</td></tr>
+      <tr><td>Audio generation</td><td><span class="tag" style="background:#fffbe6;color:#7c5e00">Manual only</span></td><td>Depends on Google API — no offline fallback</td></tr>
+      <tr><td>Media storage</td><td><span class="tag" style="background:#fff7ed;color:#c2410c">Local only</span></td><td>Needs S3 for production</td></tr>
+      <tr><td>Mobile UI</td><td><span class="tag" style="background:#fffbe6;color:#7c5e00">Basic</span></td><td>Mobile-first redesign for small screens</td></tr>
+    </table>
+
+    <h3>Roadmap</h3>
+    <div class="roadmap">
+      <div class="roadmap-col">
+        <div class="roadmap-header" style="background:#f0fce8;color:#166534">Q1 2025</div>
+        <div class="roadmap-items">
+          <div class="roadmap-item">Mobile responsiveness fixes</div>
+          <div class="roadmap-item">Settings page (password change)</div>
+          <div class="roadmap-item">Error handling improvements</div>
+          <div class="roadmap-item">Performance optimizations</div>
+        </div>
+      </div>
+      <div class="roadmap-col">
+        <div class="roadmap-header" style="background:#e8f7fe;color:#1e40af">Q2 2025</div>
+        <div class="roadmap-items">
+          <div class="roadmap-item">Leaderboard feature</div>
+          <div class="roadmap-item">Plausible Analytics</div>
+          <div class="roadmap-item">Search functionality</div>
+          <div class="roadmap-item">Offline lesson cache</div>
+        </div>
+      </div>
+      <div class="roadmap-col">
+        <div class="roadmap-header" style="background:#faf5ff;color:#7e22ce">Q3 2025</div>
+        <div class="roadmap-items">
+          <div class="roadmap-item">Quests system</div>
+          <div class="roadmap-item">Achievements/badges</div>
+          <div class="roadmap-item">Friends + social features</div>
+        </div>
+      </div>
+      <div class="roadmap-col">
+        <div class="roadmap-header" style="background:#fff7ed;color:#c2410c">Q4 2025</div>
+        <div class="roadmap-items">
+          <div class="roadmap-item">Teacher dashboard</div>
+          <div class="roadmap-item">React Native mobile app</div>
+          <div class="roadmap-item">Speech recognition</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Security Status</h3>
+    <ul class="checklist">
+      <li><span class="check-done">✓</span> JWT token rotation</li>
+      <li><span class="check-done">✓</span> HttpOnly cookies</li>
+      <li><span class="check-done">✓</span> CSRF protection</li>
+      <li><span class="check-done">✓</span> CORS configured</li>
+      <li><span class="check-done">✓</span> Password hashing</li>
+      <li><span class="check-done">✓</span> Rate limiting</li>
+      <li><span class="check-done">✓</span> Email verification</li>
+      <li><span class="check-todo">✗</span> Two-factor authentication</li>
+      <li><span class="check-todo">✗</span> OAuth / social login</li>
+      <li><span class="check-todo">✗</span> Session timeout</li>
+    </ul>
+  </section>
+
+  <!-- ── QUICK REF ── -->
+  <section class="doc-section" id="quickref">
+    <h2 class="section-title"><span class="icon" style="background:#f0fce8">⚡</span> Quick Reference</h2>
+
+    <div class="cmd-grid">
+      <div class="cmd-card">
+        <div class="cmd-title">Frontend</div>
+        <pre><span class="code-green">npm run dev</span>      <span class="code-comment"># Dev server</span>
+<span class="code-green">npm run build</span>    <span class="code-comment"># Production build</span>
+<span class="code-green">npm run lint</span>     <span class="code-comment"># ESLint check</span>
+<span class="code-green">npm run preview</span>  <span class="code-comment"># Preview build</span></pre>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-title">Backend</div>
+        <pre><span class="code-blue">python manage.py runserver</span>
+<span class="code-blue">python manage.py migrate</span>
+<span class="code-blue">python manage.py createsuperuser</span>
+<span class="code-blue">python manage.py collectstatic</span>
+<span class="code-blue">python manage.py shell</span></pre>
+      </div>
+    </div>
+
+    <h3>Important Files</h3>
+    <table class="doc-table">
+      <tr><th>File</th><th>Purpose</th></tr>
+      <tr><td><code>frontend/src/App.jsx</code></td><td>All route definitions</td></tr>
+      <tr><td><code>frontend/src/context/AuthContext.jsx</code></td><td>Auth state — user, login, logout</td></tr>
+      <tr><td><code>frontend/src/services/lessonService.js</code></td><td>Every API function</td></tr>
+      <tr><td><code>frontend/src/services/api.js</code></td><td>Axios instance + 401 interceptor</td></tr>
+      <tr><td><code>backend/core/settings.py</code></td><td>Django config — DB, JWT, CORS, Redis</td></tr>
+      <tr><td><code>backend/accounts/authentication.py</code></td><td>CookieJWTAuthentication class</td></tr>
+      <tr><td><code>backend/courses/models/</code></td><td>All database models</td></tr>
+      <tr><td><code>backend/courses/services/</code></td><td>Lesson, progression, streak, audio logic</td></tr>
+    </table>
+
+    <h3>Debugging Tips</h3>
+    <div class="card-grid">
+      <div class="card-sm">
+        <div class="card-label">Frontend</div>
+        <div style="font-size:12px;color:#4b5563;margin-top:6px;line-height:1.6">
+          F12 → Console for JS errors<br>
+          Network tab → inspect API calls<br>
+          React DevTools extension<br>
+          Check localStorage for consent data
+        </div>
+      </div>
+      <div class="card-sm">
+        <div class="card-label">Backend</div>
+        <div style="font-size:12px;color:#4b5563;margin-top:6px;line-height:1.6">
+          Terminal output for errors<br>
+          <code>python manage.py shell</code> to test queries<br>
+          Django debug toolbar<br>
+          Add <code>print()</code> or use <code>pdb</code>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:32px;font-size:12px;color:#9ca3af;text-align:center">
+      LithLingo Documentation · Last updated January 2025 · For questions refer to the GitHub repository
+    </p>
+  </section>
+
+</main>
+
+<script>
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('.doc-section');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
